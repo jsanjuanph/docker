@@ -6,6 +6,9 @@ I'm learning about Docker, so this will be where all of my Docker related files 
 
 * **itproject**
    *  This was a [PHP, MySQL web application](https://bitbucket.org/jsanjuansg/it-project/src/master/) I did back in 2009 for a school project.  Thought I'd resurrect this and use this as my "test subject" in my study of Docker and other technologies (i.e. Kubernetes, Git, etc.)   Some of the things I can think of for now is using different combinations of web and database servers (i.e. Nginx, PostgreSQL) and creating Docker images for those.  Will update this repository as I make progress. 
+   
+   *  **apache2-mariadb-debian9.**  IT Project with Apache2, MariaDB and Debian 9.
+   *  **nginx-mysql-centos610.**  IT Project with Nginx, PHP-FPM, MySQL and CentOS 6.10.
 
 
 ## Acknowledgments

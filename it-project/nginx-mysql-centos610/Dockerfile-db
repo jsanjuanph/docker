@@ -1,0 +1,35 @@
+# for my itproject web application
+# install mysql and import the db schema from the bitbucket git repo
+#
+# note: since on the it-project repo, the db sql dump was done on a newer mariadb version,
+# the sed s/utf8mb4/utf8 step was needed
+#
+# jsanjuan - 06/11/2019
+
+FROM centos:6.10
+
+RUN yum -y update && \
+    yum -y install mysql-server mysql git
+
+
+# Configure MySQL to listen on all IP addresses and not just localhost
+#RUN /bin/sed -i 's/127.0.0.1/*/gI' /etc/mysql/mariadb.conf.d/50-server.cnf
+
+
+RUN /etc/init.d/mysqld start  &&  \
+    /bin/sleep 5 && \
+    cd /tmp && \
+    /usr/bin/git clone https://jsanjuansg:''@bitbucket.org/jsanjuansg/it-project.git  && \
+    /usr/bin/mysql -u root -e "create database itproject"  && \
+    /bin/sed s/utf8mb4/utf8/g /tmp/it-project/db/itproject.sql > /tmp/it-project/db/itp.sql  && \
+    /usr/bin/mysql -u root < /tmp/it-project/db/itp.sql  && \
+    /usr/bin/mysql -u root -e "CREATE USER 'itproject'@'%' IDENTIFIED BY 'Db$sap1434'"  && \
+    /usr/bin/mysql -u root -e "GRANT ALL PRIVILEGES ON itproject.* TO 'itproject'@'%'"  && \
+    /etc/init.d/mysqld stop  && \
+    /bin/rm -rf /tmp/it-project
+
+# Make port 3306 available to the world outside this container
+#EXPOSE 3306
+
+CMD /usr/bin/mysqld_safe
+

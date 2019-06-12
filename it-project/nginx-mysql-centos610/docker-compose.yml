@@ -1,0 +1,35 @@
+# for my itproject web application
+# install nginx web and mariadb servers (details in the respective dockerfiles)
+# jsanjuan - 06/12/2019
+
+version: '3.7'
+
+services:
+  web:
+    image: itproject-nginx:1.1
+    build: 
+      context: .
+      dockerfile: Dockerfile-nginx
+      args:
+        - EXTERNAL_IP=192.168.88.18
+    ports:
+      - 80:80
+    volumes:
+      - www:/var/www/html/it-project/www
+
+  phpfpm:
+    image: itproject-phpfpm:1.1
+    build: 
+      context: .
+      dockerfile: Dockerfile-phpfpm
+    volumes:
+      - www:/var/www/html/it-project/www
+
+  mysql:
+    image:  itproject-mysql:1.1
+    build: 
+      context: .
+      dockerfile: Dockerfile-db
+
+volumes:
+  www:

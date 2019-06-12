@@ -1,0 +1,29 @@
+# for my itproject web application
+# install nginx 
+# jsanjuan - 06/12/2019
+
+FROM centos:6.10
+
+ARG EXTERNAL_IP
+
+RUN yum -y update && \
+    yum -y install epel-release  && \
+    yum -y install nginx git
+
+COPY default.conf-nginx /etc/nginx/conf.d/default.conf
+
+RUN /bin/mkdir -p /var/www/html   && \
+    cd /var/www/html  && \
+    /usr/bin/git clone https://jsanjuansg:''@bitbucket.org/jsanjuansg/it-project.git  && \
+    /bin/chown -R nginx:nginx /var/www/html  && \
+    /bin/echo $EXTERNAL_IP > /tmp/ip.txt  && \
+    /bin/echo "/bin/sed -i 's+\$itproject_url = \"x\"+\$itproject_url = \"$(/bin/cat /tmp/ip.txt)\"+g' /var/www/html/it-project/www/itproject.php"  > /tmp/rp.txt  && \
+    /bin/sh /tmp/rp.txt  && \
+    /bin/rm -f /tmp/rp.txt /tmp/ip.txt  && \
+    /bin/sed -i 's/$dbhost = "mariadb";/$dbhost = "mysql";/gI' /var/www/html/it-project/www/itproject.php
+
+# Make port 80 available to the world outside this container
+EXPOSE 80
+
+CMD /usr/sbin/nginx -g 'daemon off;'
+

@@ -1,0 +1,24 @@
+# for my itproject web application
+# install php-fpm 
+# jsanjuan - 06/12/2019
+
+FROM centos:6.10
+
+ARG EXTERNAL_IP
+
+RUN yum -y update && \
+    yum -y install epel-release  && \
+    yum -y install nginx php-fpm php-mysql mysql 
+
+RUN /bin/sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/gI' /etc/php.ini  && \
+    /bin/sed -i 's/user = apache/user = nginx/gI' /etc/php-fpm.d/www.conf  && \
+    /bin/sed -i 's/group = apache/group = nginx/gI' /etc/php-fpm.d/www.conf  && \
+    /bin/sed -i 's/listen = 127.0.0.1:9000/listen = 9000/gI' /etc/php-fpm.d/www.conf  && \
+    /bin/sed -i 's/listen.allowed_clients = 127.0.0.1/;listen.allowed_clients = 127.0.0.1/gI' /etc/php-fpm.d/www.conf 
+
+
+#EXPOSE 9000
+
+CMD /usr/sbin/php-fpm
+
+

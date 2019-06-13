@@ -1,0 +1,25 @@
+# for my itproject web application
+# install apache web, mariadb and redis servers (details in the respective dockerfiles)
+# jsanjuan - 06/13/2019
+
+version: '3'
+
+services:
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile-web
+      args:
+        - EXTERNAL_IP=192.168.88.18
+    image: itproject-web:1.2
+    ports:
+      - 80:80
+
+  mariadb:
+    build: 
+      context: .
+      dockerfile: Dockerfile-db
+    image:  itproject-mariadb:1.2
+
+  redis:
+    image: redis:latest

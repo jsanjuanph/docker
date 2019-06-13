@@ -23,7 +23,7 @@ RUN /etc/init.d/mysqld start  &&  \
     /usr/bin/mysql -u root -e "create database itproject"  && \
     /bin/sed s/utf8mb4/utf8/g /tmp/it-project/db/itproject.sql > /tmp/it-project/db/itp.sql  && \
     /usr/bin/mysql -u root < /tmp/it-project/db/itp.sql  && \
-    /usr/bin/mysql -u root -e "CREATE USER 'itproject'@'%' IDENTIFIED BY 'Db$sap1434'"  && \
+    /usr/bin/mysql -u root -e "CREATE USER 'itproject'@'%' IDENTIFIED BY 'Db#sap1434'"  && \
     /usr/bin/mysql -u root -e "GRANT ALL PRIVILEGES ON itproject.* TO 'itproject'@'%'"  && \
     /etc/init.d/mysqld stop  && \
     /bin/rm -rf /tmp/it-project

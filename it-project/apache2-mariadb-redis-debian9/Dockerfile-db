@@ -16,7 +16,7 @@ RUN /bin/sed -i 's/127.0.0.1/*/gI' /etc/mysql/mariadb.conf.d/50-server.cnf
 RUN /etc/init.d/mysql start  &&  \
     /bin/sleep 5 && \
     cd /tmp && \
-    /usr/bin/git clone https://jsanjuansg@bitbucket.org/jsanjuansg/it-project.git  && \
+    /usr/bin/git clone -b mysql-redis https://jsanjuansg@bitbucket.org/jsanjuansg/it-project.git  && \
     /usr/bin/mysql -u root -e "create database itproject"  && \
     /usr/bin/mysql -u root < /tmp/it-project/db/itproject.sql  && \
     /usr/bin/mysql -u root -e "CREATE USER 'itproject'@'%' IDENTIFIED BY 'Db#sap1434'"  && \

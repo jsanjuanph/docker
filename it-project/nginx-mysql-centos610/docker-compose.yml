@@ -6,7 +6,7 @@ version: '3.7'
 
 services:
   web:
-    image: itproject-nginx:1.1
+    image: itproject-nginx:1.0
     build: 
       context: .
       dockerfile: Dockerfile-nginx
@@ -18,7 +18,7 @@ services:
       - www:/var/www/html/it-project/www
 
   phpfpm:
-    image: itproject-phpfpm:1.1
+    image: itproject-phpfpm:1.0
     build: 
       context: .
       dockerfile: Dockerfile-phpfpm
@@ -26,7 +26,7 @@ services:
       - www:/var/www/html/it-project/www
 
   mysql:
-    image:  itproject-mysql:1.1
+    image:  itproject-mariadb:1.2
     build: 
       context: .
       dockerfile: Dockerfile-db

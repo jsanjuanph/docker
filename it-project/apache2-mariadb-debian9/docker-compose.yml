@@ -11,7 +11,7 @@ services:
       dockerfile: Dockerfile-web
       args:
         - EXTERNAL_IP=192.168.88.18
-    image: itproject-web:1.0
+    image: itproject-apache2:1.0
     ports:
       - 80:80
         #    volumes:

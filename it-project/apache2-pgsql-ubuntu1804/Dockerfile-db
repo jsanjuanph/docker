@@ -1,0 +1,31 @@
+# for my itproject web application
+# install postgresql and import the db schema from the git repo
+# jsanjuan - 06/14/2019
+
+FROM ubuntu:18.04
+
+RUN apt-get update && \
+    /bin/ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone  && \
+    apt-get -y install postgresql postgresql-client git
+
+
+# Configure MariaDB to listen on all IP addresses and not just localhost
+#RUN /bin/sed -i 's/127.0.0.1/*/gI' /etc/mysql/mariadb.conf.d/50-server.cnf
+
+RUN /bin/sed -i "91ihost    itproject      itproject        127.0.0.1/32            trust" /etc/postgresql/10/main/pg_hba.conf   && \
+    /bin/sed -i "92ihost    itproject      itproject        0.0.0.0/0                     md5" /etc/postgresql/10/main/pg_hba.conf  && \
+    /bin/sed -i "58ilisten_addresses = '*'" /etc/postgresql/10/main/postgresql.conf  && \
+    /etc/init.d/postgresql start  &&  \
+    /bin/sleep 5 && \
+    cd /tmp && \
+    /usr/bin/git clone https://gitlab.com/jsanjuansg/it-project-pgsql.git  && \
+    /bin/su - postgres -c "/usr/bin/createdb itproject"  && \
+    /bin/su - postgres -c "/usr/bin/psql -c \"create user itproject with encrypted password 'Db#sap1434'\""   && \
+    /bin/su - postgres -c "/usr/bin/psql -c \"grant all privileges on database itproject to itproject;\""  && \
+    /usr/bin/psql -h 127.0.0.1 -U itproject < /tmp/it-project-pgsql/db/itproject.sql  && \
+    /etc/init.d/postgresql stop  && \
+    /bin/rm -rf /tmp/it-project
+
+CMD su - postgres -c "/usr/lib/postgresql/10/bin/postgres -D /var/lib/postgresql/10/main -c config_file=/etc/postgresql/10/main/postgresql.conf"
+
+

@@ -14,8 +14,6 @@ services:
     image: itproject-apache2:1.0
     ports:
       - 80:80
-        #    volumes:
-        #      - /home/joshua/my-docker-app/itproject:/var/www/html/itproject
 
   mariadb:
     build: 

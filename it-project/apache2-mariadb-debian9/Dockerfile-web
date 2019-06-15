@@ -6,6 +6,7 @@ FROM debian:9
 
 ARG EXTERNAL_IP
 
+# install apache2, clone it project and configure apache to point to it
 RUN apt-get update && \
     apt-get -y install apache2 apache2-bin php php-mysql git  && \
     /bin/sed -i 's+/var/www/html+/var/www/html/it-project/www+g' /etc/apache2/sites-available/000-default.conf   && \
@@ -13,6 +14,7 @@ RUN apt-get update && \
     /usr/bin/git clone https://jsanjuansg@bitbucket.org/jsanjuansg/it-project.git
 
 
+# configure the external IP on the it project application
 RUN /bin/echo $EXTERNAL_IP > /tmp/ip.txt  && \
     /bin/echo "/bin/sed -i 's+\$itproject_url = \"x\"+\$itproject_url = \"$(/bin/cat /tmp/ip.txt)\"+g' /var/www/html/it-project/www/itproject.php"  > /tmp/rp.txt  && \
     /bin/sh /tmp/rp.txt  && \

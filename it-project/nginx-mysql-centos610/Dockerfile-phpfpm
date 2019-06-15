@@ -10,6 +10,7 @@ RUN yum -y update && \
     yum -y install epel-release  && \
     yum -y install nginx php-fpm php-mysql mysql 
 
+# configure php-fpm
 RUN /bin/sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/gI' /etc/php.ini  && \
     /bin/sed -i 's/user = apache/user = nginx/gI' /etc/php-fpm.d/www.conf  && \
     /bin/sed -i 's/group = apache/group = nginx/gI' /etc/php-fpm.d/www.conf  && \

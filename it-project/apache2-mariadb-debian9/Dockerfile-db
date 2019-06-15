@@ -7,8 +7,6 @@ FROM debian:9
 RUN apt-get update && \
     apt-get -y install mariadb-server mariadb-client git
 
-# Copy itproject/ contents into the container at /tmp/
-#COPY itproject/ /tmp/
 
 # Configure MariaDB to listen on all IP addresses and not just localhost
 RUN /bin/sed -i 's/127.0.0.1/*/gI' /etc/mysql/mariadb.conf.d/50-server.cnf
@@ -24,8 +22,6 @@ RUN /etc/init.d/mysql start  &&  \
     /etc/init.d/mysql stop  && \
     /bin/rm -rf /tmp/it-project
 
-# Make port 3306 available to the world outside this container
-#EXPOSE 3306
 
 CMD /usr/bin/mysqld_safe
 

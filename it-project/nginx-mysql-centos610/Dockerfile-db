@@ -15,7 +15,7 @@ RUN yum -y update && \
 # Configure MySQL to listen on all IP addresses and not just localhost
 #RUN /bin/sed -i 's/127.0.0.1/*/gI' /etc/mysql/mariadb.conf.d/50-server.cnf
 
-
+# create db user and import db schema
 RUN /etc/init.d/mysqld start  &&  \
     /bin/sleep 5 && \
     cd /tmp && \
@@ -28,8 +28,6 @@ RUN /etc/init.d/mysqld start  &&  \
     /etc/init.d/mysqld stop  && \
     /bin/rm -rf /tmp/it-project
 
-# Make port 3306 available to the world outside this container
-#EXPOSE 3306
 
 CMD /usr/bin/mysqld_safe
 

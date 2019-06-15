@@ -7,6 +7,7 @@ FROM ubuntu:18.04
 ENV TZ=Asia/Singapore
 ARG EXTERNAL_IP
 
+# configure timezone so it does not prompt during install, apache and clone it project from git repo
 RUN apt-get update && \
     /bin/ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone  && \
     apt-get -y install apache2 apache2-bin php php-pgsql git  && \
@@ -15,6 +16,7 @@ RUN apt-get update && \
     /usr/bin/git clone https://jsanjuansg@bitbucket.org/jsanjuansg/it-project.git
 
 
+# configure it project application with external IP
 RUN /bin/echo $EXTERNAL_IP > /tmp/ip.txt  && \
     /bin/echo "/bin/sed -i 's+\$itproject_url = \"x\"+\$itproject_url = \"$(/bin/cat /tmp/ip.txt)\"+g' /var/www/html/it-project/www/itproject.php"  > /tmp/rp.txt  && \
     /bin/sh /tmp/rp.txt  && \

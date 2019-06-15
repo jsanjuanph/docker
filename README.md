@@ -10,6 +10,8 @@ I'm learning about Docker, so this will be where all of my Docker related files 
    *  **apache2-mariadb-debian9.**  IT Project with Apache2, MariaDB on Debian 9.
    *  **nginx-mysql-centos610.**  IT Project with Nginx, PHP-FPM, MySQL on CentOS 6.10.
    *  **apache2-mysql-redis-debian9.**  IT Project with Apache2, MySQL, Redis on CentOS 6.10.
+   *  **apache2-pgsql-ubuntu1804.**  IT Project with Apache2, PostgreSQL 10 on Ubuntu 18.04
+        * [IT Project with PostgreSQL on Gitlab](https://gitlab.com/jsanjuansg/it-project-pgsql)
 
 
 ## Acknowledgments
